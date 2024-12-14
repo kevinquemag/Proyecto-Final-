@@ -1,0 +1,11 @@
+flask
+boto3
+pymysql
+python-dotenv
+requests
+flask-sqlalchemy
+SQLAlchemy
+Werkzeug
+Jinja2
+itsdangerous
+gunicorn

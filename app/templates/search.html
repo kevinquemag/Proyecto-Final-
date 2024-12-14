@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Memes</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #555;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+        .meme {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Busca un Meme</h1>
+    <form action="/search" method="get">
+        <label for="query">Etiqueta o descripción:</label><br>
+        <input type="text" id="query" name="query" placeholder="Buscar por descripción o etiqueta" required><br><br>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <hr>
+
+    {% if memes %}
+        <h2>Resultados de búsqueda:</h2>
+        {% for meme in memes %}
+            <div class="meme">
+                <img src="{{ meme.ruta }}" alt="Imagen del Meme">
+                <p><strong>Descripción:</strong> {{ meme.descripcion }}</p>
+                <p><strong>Subido por:</strong> {{ meme.usuario }}</p>
+                <p><strong>Fecha:</strong> {{ meme.cargada }}</p>
+                <p><strong>Etiquetas:</strong></p>
+                <ul>
+                    {% for etiqueta in meme_etiquetas[meme.id] %}
+                        <li>{{ etiqueta }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No se encontraron resultados.</p>
+    {% endif %}
+</body>
+</html>

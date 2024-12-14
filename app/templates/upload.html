@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Meme</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #444;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sube tu Meme</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="descripcion">Descripción:</label><br>
+        <input type="text" id="descripcion" name="descripcion" placeholder="Escribe una descripción" required><br><br>
+
+        <label for="usuario">Tu nombre:</label><br>
+        <input type="text" id="usuario" name="usuario" placeholder="Tu nombre" required><br><br>
+
+        <label for="imagen">Imagen:</label><br>
+        <input type="file" id="imagen" name="imagen" accept="image/*" required><br><br>
+
+        <label for="etiquetas">Etiquetas (separadas por comas):</label><br>
+        <input type="text" id="etiquetas" name="etiquetas" placeholder="Ejemplo: divertido, gato"><br><br>
+
+        <button type="submit">Subir Meme</button>
+    </form>
+
+    {% if etiquetas %}
+        <h2>Etiquetas Generadas:</h2>
+        <ul>
+            {% for etiqueta in etiquetas %}
+                <li>{{ etiqueta }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
