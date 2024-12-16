@@ -1,72 +1,117 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Memes</title>
+    <title>Búsqueda de Memes</title>
     <style>
         body {
-            font-family: Tahoma, sans-serif;
-            margin: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
         }
+
         h1 {
-            color: #555;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
         }
+
         form {
-            margin-bottom: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+            display: flex;
+            gap: 10px;
         }
+
         input, button {
             padding: 10px;
-            margin-top: 10px;
-            width: 100%;
-            max-width: 400px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
+
+        input {
+            flex: 1;
+        }
+
         button {
-            background-color: #007bff;
+            background-color: #007BFF;
             color: white;
-            border: none;
             cursor: pointer;
+            border: none;
         }
+
         button:hover {
             background-color: #0056b3;
         }
-        img {
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
             max-width: 300px;
+            text-align: center;
+        }
+
+        .card img {
+            max-width: 100%;
+            border-radius: 8px;
             margin-bottom: 10px;
         }
-        .meme {
-            margin-bottom: 20px;
+
+        .card p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .card .etiquetas span {
+            display: inline-block;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            margin: 2px;
         }
     </style>
 </head>
 <body>
-    <h1>Busca un Meme</h1>
-    <form action="/search" method="get">
-        <label for="query">Etiqueta o descripción:</label><br>
-        <input type="text" id="query" name="query" placeholder="Buscar por descripción o etiqueta" required><br><br>
+    <h1>Búsqueda de Memes</h1>
+    <form method="GET" action="/search">
+        <input type="text" name="query" placeholder="Buscar memes...">
         <button type="submit">Buscar</button>
     </form>
 
-    <hr>
-
-    {% if memes %}
-        <h2>Resultados de búsqueda:</h2>
-        {% for meme in memes %}
-            <div class="meme">
-                <img src="{{ meme.ruta }}" alt="Imagen del Meme">
-                <p><strong>Descripción:</strong> {{ meme.descripcion }}</p>
-                <p><strong>Subido por:</strong> {{ meme.usuario }}</p>
-                <p><strong>Fecha:</strong> {{ meme.cargada }}</p>
-                <p><strong>Etiquetas:</strong></p>
-                <ul>
-                    {% for etiqueta in meme_etiquetas[meme.id] %}
-                        <li>{{ etiqueta }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No se encontraron resultados.</p>
-    {% endif %}
+    <div class="container">
+        {% if resultados %}
+            {% for resultado in resultados %}
+                <div class="card">
+                    <img src="{{ resultado.meme.ruta }}" alt="{{ resultado.meme.descripcion }}">
+                    <p><strong>Descripción:</strong> {{ resultado.meme.descripcion }}</p>
+                    <p><strong>Usuario:</strong> {{ resultado.meme.usuario }}</p>
+                    <div class="etiquetas">
+                        <strong>Etiquetas:</strong>
+                        {% for etiqueta in resultado.etiquetas %}
+                            <span>{{ etiqueta }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center; color: #555;">No se encontraron resultados.</p>
+        {% endif %}
+    </div>
 </body>
 </html>

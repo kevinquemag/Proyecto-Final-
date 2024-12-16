@@ -3,26 +3,27 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 
+# Cargar las variables de entorno
+load_dotenv()
+
+# Crear la instancia de SQLAlchemy
 db = SQLAlchemy()
 
 def create_app():
-    # Cargar variables de entorno
-    load_dotenv()
-
-    # Crear la instancia de Flask
     app = Flask(__name__)
 
     # Configuración de la base de datos
     app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f'mysql+pymysql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}'
-    f'@{os.getenv("DB_HOST")}/{os.getenv("DB_NAME")}'
+        f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+        f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
     )
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
-
-    # Inicializar extensiones
+    # Inicializar la base de datos
     db.init_app(app)
 
-    # Registrar rutas
+    # Registrar Blueprints
     from .routes import bp as routes_bp
     app.register_blueprint(routes_bp)
 

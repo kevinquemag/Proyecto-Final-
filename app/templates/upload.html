@@ -1,62 +1,85 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir Meme</title>
     <style>
         body {
-            font-family: Verdana, sans-serif;
-            margin: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        h1 {
-            color: #444;
-        }
-        label {
-            font-weight: bold;
-        }
-        input, button {
-            margin-top: 10px;
-            padding: 10px;
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
         }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
+
+        h1 {
+            text-align: center;
+            color: #333;
         }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
         button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
         }
     </style>
 </head>
 <body>
-    <h1>Sube tu Meme</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <label for="descripcion">Descripción:</label><br>
-        <input type="text" id="descripcion" name="descripcion" placeholder="Escribe una descripción" required><br><br>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <h1>Subir Meme</h1>
+        <label for="usuario">Usuario:</label>
+        <input type="text" name="usuario" id="usuario" required>
 
-        <label for="usuario">Tu nombre:</label><br>
-        <input type="text" id="usuario" name="usuario" placeholder="Tu nombre" required><br><br>
+        <label for="descripcion">Descripción:</label>
+        <textarea name="descripcion" id="descripcion" required></textarea>
 
-        <label for="imagen">Imagen:</label><br>
-        <input type="file" id="imagen" name="imagen" accept="image/*" required><br><br>
+        <label for="etiquetas">Etiquetas personalizadas (separadas por comas):</label>
+        <input type="text" name="etiquetas" id="etiquetas">
 
-        <label for="etiquetas">Etiquetas (separadas por comas):</label><br>
-        <input type="text" id="etiquetas" name="etiquetas" placeholder="Ejemplo: divertido, gato"><br><br>
+        <label for="imagen">Imagen:</label>
+        <input type="file" name="imagen" id="imagen" required>
 
         <button type="submit">Subir Meme</button>
     </form>
-
-    {% if etiquetas %}
-        <h2>Etiquetas Generadas:</h2>
-        <ul>
-            {% for etiqueta in etiquetas %}
-                <li>{{ etiqueta }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 </body>
 </html>
